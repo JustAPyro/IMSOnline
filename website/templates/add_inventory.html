@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Add Inventory{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <h3 align="center">Add Inventory</h3>
+
+    <!-- Headers for the entry columns -->
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Name</label>
+        </div>
+        <div class="form-groupd col-md-6">
+            <label>Cost</label>
+        </div>
+    </div>
+
+    <div class="add_inventory_row"></div>
+
+    <button type="submit"
+            class="btn btn-primary"
+            >Submit
+    </button>
+
+</form>
+{% endblock %}
