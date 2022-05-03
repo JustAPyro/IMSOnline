@@ -1,5 +1,8 @@
-function deleteInputRow() {
-    console.log("DELETE!");
+function formatURLSource(source) {
+    const text = source.replace("www.", "")
+        .replace(".com", "");
+
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 function createInputRow() {
@@ -62,8 +65,17 @@ function createInputRow() {
     row.appendChild(link);
 
     // Add functionality to link input
-    inpLink.onkeyup = function() {
-        console.log(inpLink.value);
+    inpLink.onpaste = inpLink.onkeyup = function() {
+         try {
+            let validURL = new URL(inpLink.value);
+            validURL = formatURLSource(validURL.hostname);
+            console.log(validURL)
+
+
+         } catch (_) {
+             console.log(inpLink.value + " is not valid")
+            // If it's not a valid URL just ignore it
+         }
     };
 
     // Create source input
