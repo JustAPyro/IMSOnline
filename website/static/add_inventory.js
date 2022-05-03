@@ -56,17 +56,22 @@ function createInputRow() {
     // Create link input
     const link = document.createElement("div");
     link.setAttribute("class", "col-md-2");
-    const labelLink = document.createElement("input");
-    labelLink.setAttribute("class", "form-control");
-    link.appendChild(labelLink);
+    const inpLink = document.createElement("input");
+    inpLink.setAttribute("class", "form-control");
+    link.appendChild(inpLink);
     row.appendChild(link);
+
+    // Add functionality to link input
+    inpLink.onkeyup = function() {
+        console.log(inpLink.value);
+    };
 
     // Create source input
     const source = document.createElement("div");
     source.setAttribute("class", "col-md-2");
-    const labelSource = document.createElement("input");
-    labelSource.setAttribute("class", "form-control");
-    source.appendChild(labelSource);
+    const inpSource = document.createElement("input");
+    inpSource.setAttribute("class", "form-control");
+    source.appendChild(inpSource);
     row.appendChild(source);
 
     // Create the little bar/expand icon
