@@ -66,16 +66,18 @@ function createInputRow() {
 
     // Add functionality to link input
     inpLink.onpaste = inpLink.onkeyup = function() {
-         try {
+        // If there's less than 3 characters this is not going to be valid
+        if (inpLink.value < 3)
+            return
+        try {
+            // Try to convert this to a URL object
             let validURL = new URL(inpLink.value);
-            validURL = formatURLSource(validURL.hostname);
-            console.log(validURL)
 
-
-         } catch (_) {
-             console.log(inpLink.value + " is not valid")
+            // If that worked, we format it and then apply to the source box
+            inpSource.value = formatURLSource(validURL.hostname)
+        } catch (_) {
             // If it's not a valid URL just ignore it
-         }
+        }
     };
 
     // Create source input
@@ -109,7 +111,7 @@ function createInputRow() {
     remove.appendChild(btnRemove);
     row.appendChild(remove);
 
-    // Add functionality to delete
+    // Add functionality to delete a row
     btnRemove.onclick = function() {
         row.remove();
     };
