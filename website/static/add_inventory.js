@@ -1,8 +1,12 @@
+function deleteInputRow() {
+    console.log("DELETE!");
+}
+
 function createInputRow() {
 
     // Create the row
     const row = document.createElement("div");
-    row.setAttribute("class", "row g-3 my-2");
+    row.setAttribute("class", "row g-3 my-2 align-items-start");
 
     // Create the SKU div and attach the label
     const sku = document.createElement("div");
@@ -24,15 +28,68 @@ function createInputRow() {
 
     // Create the item name div and attached label
     const name = document.createElement("div");
-    name.setAttribute("class", "col-md-3");
+    name.setAttribute("class", "col");
     const labelName = document.createElement("input");
     labelName.setAttribute("class", "form-control");
     name.appendChild(labelName);
     row.appendChild(name);
 
+    // Create the cost input
+    const cost = document.createElement("div");
+    cost.setAttribute("class", "col-md-1");
+    cost.setAttribute("style", "min-width: 94px;");
+    const labelCost = document.createElement("input");
+    labelCost.setAttribute("class", "form-control");
+    cost.appendChild(labelCost);
+    row.appendChild(cost);
 
+    // TODO: This needs to be differentiated from the "qty" variable
+    // Create the quantity input
+    const quantity = document.createElement("div");
+    quantity.setAttribute("class", "col-md-1");
+    quantity.setAttribute("style", "min-width: 94px;");
+    const labelQuantity = document.createElement("input");
+    labelQuantity.setAttribute("class", "form-control");
+    quantity.appendChild(labelQuantity);
+    row.appendChild(quantity);
 
+    // Create link input
+    const link = document.createElement("div");
+    link.setAttribute("class", "col-md-2");
+    const labelLink = document.createElement("input");
+    labelLink.setAttribute("class", "form-control");
+    link.appendChild(labelLink);
+    row.appendChild(link);
 
+    // Create source input
+    const source = document.createElement("div");
+    source.setAttribute("class", "col-md-2");
+    const labelSource = document.createElement("input");
+    labelSource.setAttribute("class", "form-control");
+    source.appendChild(labelSource);
+    row.appendChild(source);
+
+    // Create the little bar/expand icon
+    const expand = document.createElement("div");
+    expand.setAttribute("class", "col-auto p-0");
+    const labelExpand = document.createElement("button");
+    labelExpand.setAttribute("class", "btn");
+    const expandImage = document.createElement("i");
+    expandImage.setAttribute("class", "fa fa-bars");
+    labelExpand.appendChild(expandImage);
+    expand.appendChild(labelExpand);
+    row.appendChild(expand);
+
+     // Create the delete icon
+    const remove = document.createElement("div");
+    remove.setAttribute("class", "col-auto p-0");
+    const labelRemove = document.createElement("button");
+    labelRemove.setAttribute("class", "btn");
+    const removeImage = document.createElement("i");
+    removeImage.setAttribute("class", "fa fa-trash");
+    labelRemove.appendChild(removeImage);
+    remove.appendChild(labelRemove);
+    row.appendChild(remove);
 
 	return row;
 }
@@ -42,7 +99,7 @@ const btnAdd = document.querySelector('#btnAdd');
 console.log("btnAdd");
 var i = 0;
 
-//document.querySelector("#inputArea").appendChild(createInputRow())
+document.querySelector("#inputArea").appendChild(createInputRow())
 btnAdd.onclick = function() {
 	const addArea = document.querySelector('#inputArea');
 	console.log(addArea);
