@@ -83,13 +83,19 @@ function createInputRow() {
      // Create the delete icon
     const remove = document.createElement("div");
     remove.setAttribute("class", "col-auto p-0");
-    const labelRemove = document.createElement("button");
-    labelRemove.setAttribute("class", "btn");
+    const btnRemove = document.createElement("button");
+    btnRemove.setAttribute("class", "btn");
+    btnRemove.setAttribute("type", "button");
     const removeImage = document.createElement("i");
     removeImage.setAttribute("class", "fa fa-trash");
-    labelRemove.appendChild(removeImage);
-    remove.appendChild(labelRemove);
+    btnRemove.appendChild(removeImage);
+    remove.appendChild(btnRemove);
     row.appendChild(remove);
+
+    // Add functionality to delete
+    btnRemove.onclick = function() {
+        row.remove();
+    };
 
 	return row;
 }
