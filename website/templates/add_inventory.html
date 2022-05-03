@@ -6,60 +6,50 @@
     <h3 align="center">Add Inventory</h3>
 
     <!-- Headers for the entry columns -->
-    <div class="row g-3">
+    <div class="row g-1 border-bottom mb-2 text-left">
 			<div class = "col-md-1">
 				<label class="col-md-1 col-form-label">Sku</label>
 			</div>
 			<div class = "col-md-1">
-				<label class="col-md-1 col-form-label">Qty. Owned</label>
+				<label class="col-md-1 col-form-label">Qty.</label>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 pl-1">
 				<label class="col-md-3 col-form-label">Name</label>
 			</div>
-			<div class="col-md-1">
+			<div class="col-md-1 pl-1">
 				<label class="col-md-1 col-form-label">Cost</label>
 			</div>
-			<div class="col-md-1">
-				<label class="col-md-1 col-form-label">Quantity</label>
+			<div class="col-md-1 pl-1">
+				<label class="col-md-1 col-form-label">Qty.</label>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-3 pl-1">
 				<label class="col-md-3 col-form-label">Source</label>
-			</div>
-			<div class="col-md-1">
-				<button class="btn"><i class="fa fa-bars"></i></button>
-			</div>
-			<div class="col-md-1">
-				<button class="btn"><i class="fa fa-trash"></i></button>
 			</div>
 		</div>
 
-		<hr class="bg-danger border-2 border-top border-danger">
-
 		<div class="row g-3">
 			<div class = "col-md-1 justify-content-center">
-				<label class="col-md-1 col-form-label">404</label>
+				<label class="col-md-1 col-form-label">New</label>
 			</div>
 			<div class = "col-md-1 justify-content-center border-right">
-				<label class="col-md-1 col-form-label">5</label>
-			</div>
-
-
-			<div class="col-md-3">
-				<input class="form-control" />
-			</div>
-			<div class="col-md-1">
-				<input class="form-control" />
-			</div>
-			<div class="col-md-1">
-				<input class="form-control" />
+				<label class="col-md-1 col-form-label">-</label>
 			</div>
 			<div class="col-md-3">
 				<input class="form-control" />
 			</div>
 			<div class="col-md-1">
+				<input class="form-control" />
+			</div>
+			<div class="col-md-1">
+				<input class="form-control" />
+			</div>
+			<div class="col-md-3">
+				<input class="form-control" />
+			</div>
+			<div class="col-auto p-0">
 				<button class="btn"><i class="fa fa-bars"></i></button>
 			</div>
-			<div class="col-md-1">
+			<div class="col-auto p-0">
 				<button class="btn"><i class="fa fa-trash"></i></button>
 			</div>
 		</div>
@@ -76,3 +66,8 @@
 
 </form>
 {% endblock %}
+
+{% block scripts %}
+ <script type="text/javascript" src="{{ url_for('static', filename='add_inventory.js')}}"></script>
+{% endblock %}
+
