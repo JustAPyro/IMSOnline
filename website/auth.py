@@ -4,9 +4,9 @@ from .models import User
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 
-
 # Our auth blueprint defines pages
 auth = Blueprint('auth', __name__)
+
 
 # The log-in route can accept get(load) methods and post(update) requests
 @auth.route('/login', methods=['GET', 'POST'])
@@ -28,11 +28,13 @@ def login():
 
     return render_template("sign_in.html", user=current_user)
 
+
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def sign_up():
@@ -76,8 +78,3 @@ def sign_up():
             return redirect(url_for('views.home'))
 
     return render_template("sign_up.html", user=current_user)
-
-
-
-
-

@@ -24,7 +24,7 @@ class Entry {
 		sku.setAttribute("class", "col-md-1 justify-content-center");
 		const labelSku = document.createElement("label");
 		labelSku.setAttribute("class", "col-md-1 col-form-label");
-		labelSku.textContent = "New"
+		labelSku.textContent = '{{ current_user.user_id | safe }}'
 		sku.appendChild(labelSku);
 		this.row.appendChild(sku);
 
@@ -270,3 +270,7 @@ btnSubmit.onclick = function() {
 }
 
 btnAdd.onclick();
+function save_to_js(data, quantity) {
+	console.log(quantity)
+	console.log(data);
+}

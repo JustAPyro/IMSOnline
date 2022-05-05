@@ -39,10 +39,8 @@
 			</div>
     </div>
 
-		<div id="inputArea">
-
-
-		</div>
+    <div id="inputArea">
+	</div>
 
     <button class="btn"
             type="button"
@@ -61,5 +59,6 @@
 
 {% block scripts %}
  <script type="text/javascript" src="{{ url_for('static', filename='add_inventory.js')}}"></script>
+ <script type="text/javascript"> myVar = save_to_js({{ item_names|tojson }}, {{ item_qty|tojson }}) </script>
 {% endblock %}
 
