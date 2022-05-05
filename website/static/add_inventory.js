@@ -5,6 +5,19 @@ function formatURLSource(source) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+class FlaskDataManager{
+
+	static load(flask_names, flask_quantity) {
+		this.names = flask_names;
+		this.quantity = flask_quantity;
+		console.log("Loaded data");
+	}
+
+	static get_names() {
+		return this.names;
+	}
+}
+
 class Entry {
 
 	constructor(index) {
@@ -156,6 +169,13 @@ class Entry {
 
 	}
 
+
+	static load_flask_data(flask_names, flask_quantity) {
+		Entry.names = flask_names;
+		Entry.quantity = flask_quantity;
+		console.log("Loaded data");
+	}
+
 	onNameModified() {}
 	onCostModified() {}
 	onQtyModified() {}
@@ -177,6 +197,9 @@ class Entry {
 	onSourceModified() {}
 
 	onAnyModified() {
+
+
+		// Assign the check/cross to indicate validity of entry
 		let v = this.validate();
 		if (this.valid !== v) {
 			this.valid = v;
@@ -269,8 +292,16 @@ btnSubmit.onclick = function() {
 
 }
 
-btnAdd.onclick();
-function save_to_js(data, quantity) {
-	console.log(quantity)
-	console.log(data);
+
+
+
+// Load variables from flask
+function load_from_flask(flask_names, flask_quantity) {
+	names = flask_names;
+	quantity = flask_quantity;
+	console.log("in method" + names[1]);
+	console.log("in method" + quantity[1]);
+
 }
+
+btnAdd.onclick();
