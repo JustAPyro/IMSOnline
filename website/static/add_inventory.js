@@ -247,7 +247,8 @@ btnSubmit.onclick = function() {
 	}
 
 	// Otherwise, submit the form
-	const.
+	const form = document.querySelector('#form');
+	form.submit()
 
 
 }
