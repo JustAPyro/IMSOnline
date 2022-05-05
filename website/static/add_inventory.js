@@ -10,9 +10,9 @@ class Entry {
 	constructor() {
 
 		// Save this object
-		var that = this;
+		const that = this;
 
-		// By default the entries are invalid
+		// By default, the entries are invalid
 		this.valid = false;
 
 		// Create the row
@@ -146,7 +146,7 @@ class Entry {
 
 		// Add functionality to delete a row
 		btnRemove.onclick = function() {
-			row.remove();
+			this.row.remove();
 		};
 
 	}
@@ -161,11 +161,11 @@ class Entry {
 		// If there's less than 3 characters this is not going to be valid
 		if (this.inpLink.value < 3) return
 
-		// Otherwise try to parse this URL
+		// Otherwise, try to parse this URL
 		try {
 			// Try to convert this to a URL object
 			let validURL = new URL(this.inpLink.value);
-			inpSource.value = formatURLSource(validURL.hostname);
+			this.inpSource.value = formatURLSource(validURL.hostname);
 		} catch (_) { /* If it's not a valid URL just ignore it */ }
 	}
 
@@ -173,14 +173,14 @@ class Entry {
 
 	onAnyModified() {
 		let v = this.validate();
-		if (this.valid != v) {
+		if (this.valid !== v) {
 			this.valid = v;
 			if (v) {
 				// If we changed to valid display the check-mark
 				this.validatorImage.setAttribute("class", "fa fa-check-circle");
 			}
 			else {
-				// Otherwise display the cross to indicate this isn't a valid row entry
+				// Otherwise, display the cross to indicate this isn't a valid row entry
 				this.validatorImage.setAttribute("class", "fa fa-times-circle");
 			}
 		}
@@ -190,29 +190,29 @@ class Entry {
 	validate() {
 
 		// Validate the name
-		var name = this.inpName.value;
+		const name = this.inpName.value;
 		if (name == null) return false;			// Name must be non-null
-		else if (name.length < 3) return false; // Name must be greater then 3 characters
+		else if (name.length < 3) return false; // Name must be greater than 3 characters
 
 		// Validate the cost
-		var cost = this.inpCost.value;
+		const cost = this.inpCost.value;
 		if (cost == null) return false;			// Not null
 		else if (cost.length < 1) return false; // Not blank
-		else if (isNaN(cost)) return false; 	// Has to be a number
+		else if (isNaN(Number(cost))) return false; 	// Has to be a number
 
 		// Validate the quantity
-		var qty = this.inpQuantity.value;
+		const qty = this.inpQuantity.value;
 		if (qty == null) return false; 	  	   // Not null
 		else if (qty.length < 1) return false; // Not blank
-		else if (isNaN(qty)) return false;	   // Has to be a number
+		else if (isNaN(Number(qty))) return false;	   // Has to be a number
 
 		// Validate the link
-		var linke = this.inpLink.value;
-		if (linke == null) return false;		 // Not null
-		else if (linke.length < 1) return false; // Not blank
+		const webLink = this.inpLink.value;
+		if (webLink == null) return false;		 // Not null
+		else if (webLink.length < 1) return false; // Not blank
 
 		// Validate the source
-		var source = this.inpSource.value;
+		const source = this.inpSource.value;
 		if (source == null) return false;			// Not null
 		else if (source.length < 1) return false;	// Not blank
 
