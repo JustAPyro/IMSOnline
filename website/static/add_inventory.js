@@ -6,15 +6,15 @@ function formatURLSource(source) {
 }
 
 class Entry {
-	
+
 	constructor() {
-		
+
 		// Save this object
 		var that = this;
-		
+
 		// By default the entries are invalid
 		this.valid = false;
-		
+
 		// Create the row
 		this.row = document.createElement("div");
 		this.row.setAttribute("class", "row g-3 my-2 align-items-start");
@@ -44,10 +44,10 @@ class Entry {
 		this.inpName.setAttribute("class", "form-control");
 		name.appendChild(this.inpName);
 		this.row.appendChild(name);
-		
+
 		// Link functionality to the name input
-		this.inpName.onpaste = this.inpName.onkeyup = function() { 
-			that.onNameModified(); 
+		this.inpName.onpaste = this.inpName.onkeyup = function() {
+			that.onNameModified();
 			that.onAnyModified();
 		}
 
@@ -59,7 +59,7 @@ class Entry {
 		this.inpCost.setAttribute("class", "form-control");
 		cost.appendChild(this.inpCost);
 		this.row.appendChild(cost);
-		
+
 		// Link functionality to the cost input
 		this.inpCost.onpaste = this.inpCost.onkeyup = function() {
 			that.onCostModified();
@@ -75,7 +75,7 @@ class Entry {
 		this.inpQuantity.setAttribute("class", "form-control");
 		quantity.appendChild(this.inpQuantity);
 		this.row.appendChild(quantity);
-		
+
 		// Link functionality to the quantity input
 		this.inpQuantity.onkeyup = this.inpQuantity.onpaste = function() {
 			that.onQtyModified();
@@ -89,7 +89,7 @@ class Entry {
 		this.inpLink.setAttribute("class", "form-control");
 		link.appendChild(this.inpLink);
 		this.row.appendChild(link);
-		
+
 		// Link functionality to the link input
 		this.inpLink.onkeyup = this.inpLink.onpaste = function() {
 			that.onLinkModified();
@@ -103,13 +103,13 @@ class Entry {
 		this.inpSource.setAttribute("class", "form-control");
 		source.appendChild(this.inpSource);
 		this.row.appendChild(source);
-		
+
 		// Link any functionality to the source input
 		this.inpSource.onkeyup = this.inpSource.onpaste = function() {
 			that.onSourceModified();
 			that.onAnyModified();
 		}
-		
+
 		// Create the checkmark icon
 		const validator = document.createElement("div");
 		validator.setAttribute("class", "col-auto p-0");
@@ -148,19 +148,19 @@ class Entry {
 		btnRemove.onclick = function() {
 			row.remove();
 		};
-		
+
 	}
-	
+
 	onNameModified() {}
 	onCostModified() {}
 	onQtyModified() {}
 
 	onLinkModified() {
-		
-		
+
+
 		// If there's less than 3 characters this is not going to be valid
 		if (this.inpLink.value < 3) return
-		
+
 		// Otherwise try to parse this URL
 		try {
 			// Try to convert this to a URL object
@@ -168,10 +168,10 @@ class Entry {
 			inpSource.value = formatURLSource(validURL.hostname);
 		} catch (_) { /* If it's not a valid URL just ignore it */ }
 	}
-	
+
 	onSourceModified() {}
-	
-	onAnyModified() { 
+
+	onAnyModified() {
 		let v = this.validate();
 		if (this.valid != v) {
 			this.valid = v;
@@ -185,49 +185,71 @@ class Entry {
 			}
 		}
 	}
-	
-	
+
+
 	validate() {
-		
+
 		// Validate the name
 		var name = this.inpName.value;
 		if (name == null) return false;			// Name must be non-null
 		else if (name.length < 3) return false; // Name must be greater then 3 characters
-		
+
 		// Validate the cost
 		var cost = this.inpCost.value;
 		if (cost == null) return false;			// Not null
 		else if (cost.length < 1) return false; // Not blank
 		else if (isNaN(cost)) return false; 	// Has to be a number
-		
+
 		// Validate the quantity
 		var qty = this.inpQuantity.value;
 		if (qty == null) return false; 	  	   // Not null
 		else if (qty.length < 1) return false; // Not blank
 		else if (isNaN(qty)) return false;	   // Has to be a number
-		
+
 		// Validate the link
 		var linke = this.inpLink.value;
 		if (linke == null) return false;		 // Not null
 		else if (linke.length < 1) return false; // Not blank
-		
+
 		// Validate the source
 		var source = this.inpSource.value;
 		if (source == null) return false;			// Not null
 		else if (source.length < 1) return false;	// Not blank
-		
+
 		// If we've passed all checks return true
 		return true;
-		
+
 	}
-	
+
 }
 
 
+// Track all entries generated
+const allEntries = [];
 
 const btnAdd = document.querySelector('#btnAdd');
 btnAdd.onclick = function() {
 	const addArea = document.querySelector('#inputArea');
 	const entry = new Entry();
+	allEntries.push(entry);
 	addArea.appendChild(entry.row);
 };
+
+const btnSubmit = document.querySelector('#btnSubmit');
+btnSubmit.onclick = function() {
+
+	// Check to make sure that each entry is filled correctly
+	for (let i = 0; i < allEntries.length; i++) {
+		if (!allEntries[i].validate()) {
+			alert("Inventory missing fields. Fill in all information before submitting.");
+			return;
+		}
+	}
+
+	// Otherwise, submit the form
+	const.
+
+
+}
+
+btnAdd.onclick();
