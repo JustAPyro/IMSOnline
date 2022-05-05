@@ -7,7 +7,7 @@ function formatURLSource(source) {
 
 class Entry {
 
-	constructor() {
+	constructor(index) {
 
 		// Save this object
 		const that = this;
@@ -42,6 +42,7 @@ class Entry {
 		name.setAttribute("class", "col");
 		this.inpName = document.createElement("input");
 		this.inpName.setAttribute("class", "form-control");
+		this.inpName.setAttribute("name", "name_"+index);
 		name.appendChild(this.inpName);
 		this.row.appendChild(name);
 
@@ -57,6 +58,7 @@ class Entry {
 		cost.setAttribute("style", "min-width: 94px;");
 		this.inpCost = document.createElement("input");
 		this.inpCost.setAttribute("class", "form-control");
+		this.inpCost.setAttribute("name", "cost_"+index)
 		cost.appendChild(this.inpCost);
 		this.row.appendChild(cost);
 
@@ -73,6 +75,7 @@ class Entry {
 		quantity.setAttribute("style", "min-width: 94px;");
 		this.inpQuantity = document.createElement("input");
 		this.inpQuantity.setAttribute("class", "form-control");
+		this.inpQuantity.setAttribute("name", "quantity_"+index)
 		quantity.appendChild(this.inpQuantity);
 		this.row.appendChild(quantity);
 
@@ -87,6 +90,7 @@ class Entry {
 		link.setAttribute("class", "col-md-2");
 		this.inpLink = document.createElement("input");
 		this.inpLink.setAttribute("class", "form-control");
+		this.inpLink.setAttribute("name", "link_"+index)
 		link.appendChild(this.inpLink);
 		this.row.appendChild(link);
 
@@ -101,6 +105,7 @@ class Entry {
 		source.setAttribute("class", "col-md-2");
 		this.inpSource = document.createElement("input");
 		this.inpSource.setAttribute("class", "form-control");
+		this.inpSource.setAttribute("name", "source_"+index)
 		source.appendChild(this.inpSource);
 		this.row.appendChild(source);
 
@@ -230,7 +235,7 @@ const allEntries = [];
 const btnAdd = document.querySelector('#btnAdd');
 btnAdd.onclick = function() {
 	const addArea = document.querySelector('#inputArea');
-	const entry = new Entry();
+	const entry = new Entry(allEntries.length);
 	allEntries.push(entry);
 	addArea.appendChild(entry.row);
 };
@@ -246,8 +251,19 @@ btnSubmit.onclick = function() {
 		}
 	}
 
-	// Otherwise, submit the form
+	// Otherwise, Get the form
 	const form = document.querySelector('#form');
+
+	// Create a hidden input that will also submit the number of entries total
+	let e = document.querySelector("#entries");
+	if (e !== null) e.remove();
+	let input = document.createElement("input")
+	input.setAttribute("type", "hidden");
+	input.setAttribute("name", "entries");
+	input.value = String(allEntries.length)
+	form.appendChild(input);
+
+	// And submit it
 	form.submit()
 
 
