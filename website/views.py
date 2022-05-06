@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from sqlalchemy import func
 from .models import Item
@@ -17,7 +17,9 @@ def home():
 @views.route('/view_inventory')
 @login_required
 def view_inventory():
-    pass
+
+    user_items = current_user.items.all()
+    return render_template("view_inventory.html", user=current_user, user_items=user_items)
 
 @views.route('/add_inventory', methods=['GET', 'POST'])
 @login_required
@@ -41,19 +43,6 @@ def _add_inventory_POST():
         for item in current_user.items.all():
             next_sku = max(next_sku, item.sku)
 
-        """
-        r = Item.query.filter(
-            Item.user_id.like(current_user.id),
-            Item.name.like(item_name)
-        )
-        print("Query info:")
-        print(type(r))
-        print(r)
-        print(r.first())
-        print("End q")
-
-        # user = User.query.filter_by(email=email).first()
-        """
         new_item = Item(
             sku=next_sku + 1,
             name=request.form.get(f"name_{i}"),
@@ -66,7 +55,7 @@ def _add_inventory_POST():
         db.session.add(new_item)
     db.session.commit()
 
-    return _add_inventory_GET()
+    return redirect(url_for('views.view_inventory'))
 
 
 def _add_inventory_GET():
