@@ -35,19 +35,19 @@ class Entry {
 		// Create the SKU div and attach the label
 		const sku = document.createElement("div");
 		sku.setAttribute("class", "col-md-1 justify-content-center");
-		const labelSku = document.createElement("label");
-		labelSku.setAttribute("class", "col-md-1 col-form-label");
-		labelSku.textContent = '{{ current_user.user_id | safe }}'
-		sku.appendChild(labelSku);
+		this.labelSku = document.createElement("label");
+		this.labelSku.setAttribute("class", "col-md-1 col-form-label");
+		this.labelSku.textContent = 'New'
+		sku.appendChild(this.labelSku);
 		this.row.appendChild(sku);
 
 		// Create the QTY div and attach the label
 		const qty = document.createElement("div");
 		qty.setAttribute("class", "col-md-1 justify-content-center border-right");
-		const labelQty = document.createElement("label");
-		labelQty.setAttribute("class", "col-md-1 col-form-label");
-		labelQty.textContent = "-"
-		qty.appendChild(labelQty);
+		this.labelQty = document.createElement("label");
+		this.labelQty.setAttribute("class", "col-md-1 col-form-label");
+		this.labelQty.textContent = "-"
+		qty.appendChild(this.labelQty);
 		this.row.appendChild(qty);
 
 		// Create the item name div and attached label
@@ -169,14 +169,29 @@ class Entry {
 
 	}
 
-
-	static load_flask_data(flask_names, flask_quantity) {
-		Entry.names = flask_names;
+	/* Loads flask user data into the entries for tracking sku/qty */
+	static load_flask_data(flask_skus, flask_quantity) {
+		Entry.skus = flask_skus;
 		Entry.quantity = flask_quantity;
-		console.log("Loaded data");
 	}
 
-	onNameModified() {}
+	onNameModified() {
+
+		// Check if we have a sku for this named item
+		let name = this.inpName.value;
+		if (typeof Entry.skus[name] !== typeof undefined) {
+
+			// If so, populate that and quantity
+			let sku = Entry.skus[name];
+			this.labelSku.textContent = sku;
+			this.labelQty.textContent = Entry.quantity[sku];
+
+		}
+		else {
+			this.labelSku.textContent = "New";
+			this.labelQty.textContent = "-"
+		}
+	}
 	onCostModified() {}
 	onQtyModified() {}
 

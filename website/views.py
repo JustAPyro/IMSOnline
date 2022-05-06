@@ -14,6 +14,11 @@ def home():
     return render_template("home.html", user=current_user)
 
 
+@views.route('/view_inventory')
+@login_required
+def view_inventory():
+    pass
+
 @views.route('/add_inventory', methods=['GET', 'POST'])
 @login_required
 def add_inventory():
@@ -61,20 +66,18 @@ def _add_inventory_POST():
         db.session.add(new_item)
     db.session.commit()
 
-    return render_template("add_inventory.html", user=current_user)
+    return _add_inventory_GET()
 
 
 def _add_inventory_GET():
-    print("Getted")
-    data = ["stuff", "things", "things", "stuff"]
 
     # Datamaps
-    item_names = {}
+    item_skus = {}
     item_qty = {}
 
     # Construct a hashset showing the sku's this user is using
     for item in current_user.items.all():
-        item_names[item.sku] = item.name
+        item_skus[item.name] = item.sku
         item_qty[item.sku] = item.quantity
 
-    return render_template("add_inventory.html", user=current_user, item_names=item_names, item_qty=item_qty)
+    return render_template("add_inventory.html", user=current_user, item_skus=item_skus, item_qty=item_qty)
