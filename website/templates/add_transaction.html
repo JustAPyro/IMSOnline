@@ -13,15 +13,25 @@
 
         <!-- Headers for the entry columns -->
 
-        <div class="row g-1 mb-5">
-            <div class="col text-right">
-                <label for="inpSource" class="form-text">Transaction Source: </label>
+        <div class="form-row">
+            <div class="form-group col-2">
+                <label>Transaction #</label>
+                <input type="text" class="form-control" value="10001" readonly>
             </div>
-            <div class="col">
-                <input type="text" id="inpSource" class="form-control"/>
+            <div class="form-group col">
+                <label for="inpSource">Source</label>
+                <input type="text" class="form-control" id="inpSource">
             </div>
-            <div class="col">
-                <label class="form-text">Online Transaction <input type="checkbox"></label>
+            <div class="form-group col-auto">
+                <label for="inpDate">Date</label>
+                <input type="date" class="form-control">
+            </div>
+            <div class="form-group col">
+                <label for="selOnline">Online/Retail</label>
+                <select id="selOnline" class="form-control">
+                    <option selected>Online Order</option>
+                    <option>Retail Purchase</option>
+                </select>
             </div>
         </div>
 
