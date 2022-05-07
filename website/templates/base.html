@@ -17,8 +17,14 @@
             crossorigin="anonymous"
     />
 
+    <!-- Add an inheritance block for any CSS imports -->
+    {% block header %}{% endblock %}
+
     <!-- Define a title for child templates to override -->
     <title>{% block title %}Home{% endblock %}</title>
+
+
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
