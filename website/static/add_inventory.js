@@ -100,7 +100,7 @@ class Entry {
 
 		// Create link input
 		const link = document.createElement("div");
-		link.setAttribute("class", "col-md-2");
+		link.setAttribute("class", "col-md-3");
 		this.inpLink = document.createElement("input");
 		this.inpLink.setAttribute("class", "form-control");
 		this.inpLink.setAttribute("name", "link_"+index)
@@ -110,21 +110,6 @@ class Entry {
 		// Link functionality to the link input
 		this.inpLink.onkeyup = this.inpLink.onpaste = function() {
 			that.onLinkModified();
-			that.onAnyModified();
-		}
-
-		// Create source input
-		const source = document.createElement("div");
-		source.setAttribute("class", "col-md-2");
-		this.inpSource = document.createElement("input");
-		this.inpSource.setAttribute("class", "form-control");
-		this.inpSource.setAttribute("name", "source_"+index)
-		source.appendChild(this.inpSource);
-		this.row.appendChild(source);
-
-		// Link any functionality to the source input
-		this.inpSource.onkeyup = this.inpSource.onpaste = function() {
-			that.onSourceModified();
 			that.onAnyModified();
 		}
 
@@ -197,7 +182,7 @@ class Entry {
 
 	onLinkModified() {
 
-
+	/*
 		// If there's less than 3 characters this is not going to be valid
 		if (this.inpLink.value < 3) return
 
@@ -206,7 +191,8 @@ class Entry {
 			// Try to convert this to a URL object
 			let validURL = new URL(this.inpLink.value);
 			this.inpSource.value = formatURLSource(validURL.hostname);
-		} catch (_) { /* If it's not a valid URL just ignore it */ }
+		} catch (_) { /* If it's not a valid URL just ignore it / }
+		*/
 	}
 
 	onSourceModified() {}
