@@ -31,6 +31,7 @@ def create_app():
     if not path.exists(f'website/{DB_NAME}'):
         db.create_all(app=app)
         print("Created new database!")
+    db.create_all(app=app)
 
     # Set up the sign in manager
     login_manager = LoginManager()

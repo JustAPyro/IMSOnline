@@ -59,28 +59,25 @@ def _add_inventory_POST():
     """
     return redirect(url_for('views.view_inventory'))
 
-
 def _add_inventory_GET():
 
     # Datamaps
     item_skus = {}
     item_qty = {}
 
-    # Get the number of entries
-    num_entries = int(request.form.get("entries"))
+    # If this is the first transaction, use 10000, otherwise get the max+1
+    next_transaction_batch = 10000
+    if len(current_user.transactions.all()) > 0:
+        next_transaction_batch = \
+            max(map(lambda transaction: transaction.transaction_batch, current_user.transactions.all())) + 1
 
-    # For each entry construct a DB item and insert it
-    for i in range(num_entries):
-
-        next_sku = 0
-        for item in current_user.items.all():
-            next_sku = max(next_sku, item.sku)
-
-    current_user.items.all()
+    # Get the highest transaction batch number
 
     # Construct a hashset showing the sku's this user is using
     for item in current_user.items.all():
         item_skus[item.name] = item.sku
         item_qty[item.sku] = item.quantity
 
-    return render_template("add_transaction.html", user=current_user, item_skus=item_skus, item_qty=item_qty)
+    return render_template("add_transaction.html", user=current_user, next_transaction_batch=next_transaction_batch,
+                           item_skus=item_skus, item_qty=item_qty)
+
