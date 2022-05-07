@@ -13,22 +13,22 @@
 
         <!-- Headers for the entry columns -->
 
-        <div class="form-row">
+        <div class="form-row mb-3">
             <div class="form-group col-2">
                 <label>Transaction #</label>
-                <input type="text" class="form-control" value="10001" readonly>
+                <input type="text" name="batch_id" class="form-control" value="10001" readonly>
             </div>
             <div class="form-group col">
                 <label for="inpSource">Source</label>
-                <input type="text" class="form-control" id="inpSource">
+                <input type="text" class="form-control" name="inpSource">
             </div>
             <div class="form-group col-auto">
                 <label for="inpDate">Date</label>
-                <input type="date" class="form-control">
+                <input type="date" name="inpDate" class="form-control">
             </div>
             <div class="form-group col">
                 <label for="selOnline">Online/Retail</label>
-                <select id="selOnline" class="form-control">
+                <select name="selOnline" class="form-control">
                     <option selected>Online Order</option>
                     <option>Retail Purchase</option>
                 </select>
@@ -36,7 +36,7 @@
         </div>
 
 
-        <div class="row g-1 align-items-start border-bottom mb-2 text-left">
+        <div class="row g-1 align-items-start border-bottom border-top mb-2 text-left">
             <div class="col-md-1">
                 <label class="col-md-1 col-form-label">Sku</label>
             </div>

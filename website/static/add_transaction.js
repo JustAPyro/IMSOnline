@@ -236,16 +236,6 @@ class Entry {
 		else if (qty.length < 1) return false; // Not blank
 		else if (isNaN(Number(qty))) return false;	   // Has to be a number
 
-		// Validate the link
-		const webLink = this.inpLink.value;
-		if (webLink == null) return false;		 // Not null
-		else if (webLink.length < 1) return false; // Not blank
-
-		// Validate the source
-		const source = this.inpSource.value;
-		if (source == null) return false;			// Not null
-		else if (source.length < 1) return false;	// Not blank
-
 		// If we've passed all checks return true
 		return true;
 
@@ -277,6 +267,16 @@ function removeEntry(entry) {
 		addArea.removeChild(entry.row);
 	}
 
+}
+
+function wrapExtraInput(inputName, value) {
+	let e = document.querySelector("#"+inputName);
+	if (e !== null) e.remove();
+	let input = document.createElement("input")
+	input.setAttribute("type", "hidden");
+	input.setAttribute("name", inputName);
+	input.value = String(value)
+	return input;
 }
 
 const btnSubmit = document.querySelector('#btnSubmit');

@@ -25,7 +25,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     # Make sure that the database tables are defined
-    from .models import User, Note, Item
+    from .models import User, Transaction, Item
 
     # If the database hasn't been created, do that
     if not path.exists(f'website/{DB_NAME}'):

@@ -14,11 +14,34 @@ class Item(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
-class Note(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(10000))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+class Transaction(db.Model):
+    """
+    Represents a unique transaction/purchase from a specific
+    time/location/series of items.
+    """
+    # Unique transaction ID for keying purposes
+    transaction_id = db.Column(db.Integer, primary_key=True)
+
+    # If multiple items are bought in the same transaction, _batch will match
+    transaction_batch = db.Column(db.Integer)
+
+    # The date the transaction was made
+    transaction_date = db.Column(db.Date)
+
+    # The source of the transaction
+    transaction_source = db.Column(db.String(100))
+
+    # Number of items purchased
+    quantity = db.Column(db.Integer)
+
+    # Total cost of these items
+    total_cost = db.Column(db.Integer)
+
+    # The user that made the transaction, linked with unique key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    # The item that was involved in the transaction, linked with unique key
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
 
 
 class User(db.Model, UserMixin):
@@ -26,5 +49,5 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)  # Max email length is 150
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
-    notes = db.relationship('Note')
     items = db.relationship('Item', lazy="dynamic")
+    transactions = db.relationship('Transaction', lazy="dynamic")

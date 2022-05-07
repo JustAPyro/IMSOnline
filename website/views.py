@@ -32,7 +32,9 @@ def add_inventory():
 
 def _add_inventory_POST():
     print("Posting info")
-
+    print(request.form)
+    print(request.form.get("inpSource"))
+    """
     # Get the number of entries
     num_entries = int(request.form.get("entries"))
 
@@ -54,7 +56,7 @@ def _add_inventory_POST():
         )
         db.session.add(new_item)
     db.session.commit()
-
+    """
     return redirect(url_for('views.view_inventory'))
 
 
@@ -63,6 +65,18 @@ def _add_inventory_GET():
     # Datamaps
     item_skus = {}
     item_qty = {}
+
+    # Get the number of entries
+    num_entries = int(request.form.get("entries"))
+
+    # For each entry construct a DB item and insert it
+    for i in range(num_entries):
+
+        next_sku = 0
+        for item in current_user.items.all():
+            next_sku = max(next_sku, item.sku)
+
+    current_user.items.all()
 
     # Construct a hashset showing the sku's this user is using
     for item in current_user.items.all():
