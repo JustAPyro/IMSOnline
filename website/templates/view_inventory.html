@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Inventory View{% endblock %}
+
+{% block content %}
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Sku</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in user_items %}
+                <tr>
+                    <td>{{ item.sku }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
