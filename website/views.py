@@ -21,7 +21,7 @@ def view_inventory():
     user_items = current_user.items.all()
     return render_template("view_inventory.html", user=current_user, user_items=user_items)
 
-@views.route('/add_inventory', methods=['GET', 'POST'])
+@views.route('/add_transaction', methods=['GET', 'POST'])
 @login_required
 def add_inventory():
     if request.method == 'POST':
@@ -69,4 +69,4 @@ def _add_inventory_GET():
         item_skus[item.name] = item.sku
         item_qty[item.sku] = item.quantity
 
-    return render_template("add_inventory.html", user=current_user, item_skus=item_skus, item_qty=item_qty)
+    return render_template("add_transaction.html", user=current_user, item_skus=item_skus, item_qty=item_qty)
