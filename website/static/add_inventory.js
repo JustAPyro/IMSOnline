@@ -149,7 +149,8 @@ class Entry {
 
 		// Add functionality to delete a row
 		btnRemove.onclick = function() {
-			this.row.remove();
+			console.log("Success");
+			removeEntry(that);
 		};
 
 	}
@@ -263,6 +264,20 @@ btnAdd.onclick = function() {
 	allEntries.push(entry);
 	addArea.appendChild(entry.row);
 };
+
+function removeEntry(entry) {
+	const addArea = document.querySelector('#inputArea');
+
+	// Check if this a valid entry
+	const i = allEntries.indexOf(entry);
+	console.log(i);
+	if (i > -1) {
+		// If it's a valid entry, remove from array and DOM
+		allEntries.splice(i, 1);
+		addArea.removeChild(entry.row);
+	}
+
+}
 
 const btnSubmit = document.querySelector('#btnSubmit');
 btnSubmit.onclick = function() {
