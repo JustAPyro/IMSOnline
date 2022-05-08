@@ -4,11 +4,12 @@ from sqlalchemy.sql import func
 
 
 class Item(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, primary_key=True)
     sku = db.Column(db.Integer)
     name = db.Column(db.String(100))
     link = db.Column(db.String(100))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    transactions = db.relationship("Transaction")
 
 
 class Transaction_Information(db.Model):
@@ -50,7 +51,7 @@ class Transaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     # The item that was involved in the transaction, linked with unique key
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.item_id'))
 
 
 class User(db.Model, UserMixin):

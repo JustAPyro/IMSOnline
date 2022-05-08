@@ -86,11 +86,14 @@ def _add_inventory_POST():
                 link=request.form.get("inpLink"),
                 user_id=current_user.id)
             db.session.add(new_db_item)
+            db.session.commit()
 
-        else:
-            # Otherwise, get the item sku
-            item_sku = item.sku
+        item = current_user.items.filter_by(name=request.form.get("inpName")).first()
 
+
+        print(info_key)
+        print(batch_id)
+        print(item.item_id)
         # Now generate a new transaction with the item sku
         new_transaction = Transaction(
             # transaction_id is assigned automatically
@@ -99,8 +102,10 @@ def _add_inventory_POST():
             quantity=request.form.get("inpQuantity"),
             cost=request.form.get("inpCost"),
             user_id=current_user.id,
-            item_id=item
+            item_id=[item.item_id]
         )
+
+        print("Transaction done")
 
         # Check if we have a sku
         next_sku = 0
@@ -114,7 +119,7 @@ def _add_inventory_POST():
             cost=request.form.get(f"cost_{i}"),
             link=request.form.get(f"link_{i}"),
             source=request.form.get(f"source_{i}"),
-            user_id=current_user.id
+            user_id=[current_user.id]
         )
 
         db.session.add(new_item)
@@ -137,7 +142,6 @@ def _add_inventory_GET():
     # Construct a hashset showing the sku's this user is using
     for item in current_user.items.all():
         item_skus[item.name] = item.sku
-        item_qty[item.sku] = item.quantity
 
     # Return the rendered HTML template
     return render_template("add_transaction.html", user=current_user, next_transaction_batch=next_transaction_batch,
