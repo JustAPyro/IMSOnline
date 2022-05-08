@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from sqlalchemy import func
-from .models import Item
+from .models import Transaction, Transaction_Information, Item
 from . import db
 
 # Our blueprint is called views
@@ -17,9 +17,9 @@ def home():
 @views.route('/view_inventory')
 @login_required
 def view_inventory():
-
     user_items = current_user.items.all()
     return render_template("view_inventory.html", user=current_user, user_items=user_items)
+
 
 @views.route('/add_transaction', methods=['GET', 'POST'])
 @login_required
@@ -31,16 +31,42 @@ def add_inventory():
 
 
 def _add_inventory_POST():
-    print("Posting info")
-    print(request.form)
-    print(request.form.get("inpSource"))
-    """
     # Get the number of entries
     num_entries = int(request.form.get("entries"))
+    skus = map(lambda itm: itm.sku, current_user.items.all())
 
-    # For each entry construct a DB item and insert it
+    # get the batch ID
+    batch_id = request.form.get("batchID")
+
+    # Create a transaction information object and send to DB
+    trans_info = Transaction_Information(
+        batch=batch_id,
+        date=request.form.get("calDate"),
+        source=request.form.get("inpSource")
+    )
+
+    # Commit this to the DB and get the unique key assigned it
+    db.session.add(trans_info)
+    db.session.commit()
+    info_key = trans_info.transaction_info_id
+
+    # now, for each entry construct a DB item and insert it (Along with the info key)
     for i in range(num_entries):
 
+        # calculate the item id here
+        item_id = 3
+
+        new_transaction = Transaction(
+            # transaction_id is assigned automatically
+            transaction_info=info_key,
+            transaction_batch=batch_id,
+            quantity=request.form.get("inpQuantity"),
+            cost=request.form.get("inpCost"),
+            user_id=current_user.id,
+            item_id=item_id
+        )
+
+        # Check if we have a sku
         next_sku = 0
         for item in current_user.items.all():
             next_sku = max(next_sku, item.sku)
@@ -54,13 +80,14 @@ def _add_inventory_POST():
             source=request.form.get(f"source_{i}"),
             user_id=current_user.id
         )
+
         db.session.add(new_item)
     db.session.commit()
-    """
+
     return redirect(url_for('views.view_inventory'))
 
-def _add_inventory_GET():
 
+def _add_inventory_GET():
     # Datamaps
     item_skus = {}
     item_qty = {}
@@ -71,13 +98,11 @@ def _add_inventory_GET():
         next_transaction_batch = \
             max(map(lambda transaction: transaction.transaction_batch, current_user.transactions.all())) + 1
 
-    # Get the highest transaction batch number
-
     # Construct a hashset showing the sku's this user is using
     for item in current_user.items.all():
         item_skus[item.name] = item.sku
         item_qty[item.sku] = item.quantity
 
+    # Return the rendered HTML template
     return render_template("add_transaction.html", user=current_user, next_transaction_batch=next_transaction_batch,
                            item_skus=item_skus, item_qty=item_qty)
-

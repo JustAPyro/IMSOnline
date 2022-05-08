@@ -14,6 +14,21 @@ class Item(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
+class Transaction_Information(db.Model):
+
+    # The unique key for this transaction information
+    transaction_info_id = db.Column(db.Integer, primary_key=True)
+
+    # The date the transaction was made
+    transaction_date = db.Column(db.Date)
+
+    # The source of the transaction
+    transaction_source = db.Column(db.String(100))
+
+    # The transaction ID
+    transaction_id = db.Column(db.Integer, db.ForeignKey('transaction.transaction_id'))
+
+
 class Transaction(db.Model):
     """
     Represents a unique transaction/purchase from a specific
@@ -22,20 +37,17 @@ class Transaction(db.Model):
     # Unique transaction ID for keying purposes
     transaction_id = db.Column(db.Integer, primary_key=True)
 
+    # Information associated with this transaction (Links to date/source)
+    transaction_info = db.relationship("Transaction_Information", lazy="dynamic")
+
     # If multiple items are bought in the same transaction, _batch will match
     transaction_batch = db.Column(db.Integer)
-
-    # The date the transaction was made
-    transaction_date = db.Column(db.Date)
-
-    # The source of the transaction
-    transaction_source = db.Column(db.String(100))
 
     # Number of items purchased
     quantity = db.Column(db.Integer)
 
     # Total cost of these items
-    total_cost = db.Column(db.Integer)
+    cost = db.Column(db.Integer)
 
     # The user that made the transaction, linked with unique key
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
