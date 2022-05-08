@@ -6,11 +6,8 @@ from sqlalchemy.sql import func
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sku = db.Column(db.Integer)
-    quantity = db.Column(db.Integer)
     name = db.Column(db.String(100))
-    cost = db.Column(db.BigInteger)
     link = db.Column(db.String(100))
-    source = db.Column(db.String(100))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 

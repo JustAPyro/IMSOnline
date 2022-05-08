@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from os import path
 
+DEFAULT_ITEM_SKU = 1000
+
 db = SQLAlchemy()
 DB_NAME = 'database.db'
 
